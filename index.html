@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Територія наукових відкриттів</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--night:#050b24;--deep:#0c1a46;--panel:#11235a;--line:#2a4290;--ice:#e6f3ff;--mute:#a9bbe3;--cyan:#4fd8ff;--gold:#ffc766;
+--head:'Unbounded','Trebuchet MS',sans-serif;--body:'Onest','Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--ice);font:400 1.05rem/1.7 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+nav{position:sticky;top:0;z-index:20;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;padding:.8rem 1rem;background:rgba(5,11,36,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav a{text-decoration:none;color:var(--mute);font-weight:500;font-size:.95rem;padding:.2rem .1rem;border-bottom:2px solid transparent}
+nav a:hover{color:var(--ice);border-color:var(--gold)}
+.hero{position:relative;min-height:92vh;display:grid;place-items:center;text-align:center;padding:4rem 1.2rem;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,#1b3a9c 0%,var(--deep) 45%,var(--night) 80%)}
+#sky{position:absolute;inset:0;width:100%;height:100%}
+.hero>div{position:relative;max-width:900px}
+.hero h1{font:800 clamp(2.2rem,7vw,5rem)/1.05 var(--head);letter-spacing:-.02em;background:linear-gradient(95deg,#fff 30%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise 1.2s both}
+.hero p.slogan{font:500 clamp(1.1rem,2.6vw,1.6rem)/1.4 var(--body);color:var(--gold);margin:1.4rem 0 .8rem;animation:rise 1.2s .25s both}
+.hero p.lead{color:var(--mute);max-width:640px;margin:0 auto 2rem;animation:rise 1.2s .45s both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.count{display:inline-flex;gap:1rem;align-items:center;padding:.8rem 1.4rem;border:1px solid var(--line);border-radius:999px;background:rgba(17,35,90,.6);animation:rise 1.2s .65s both}
+.count b{font:600 1.5rem var(--head);color:var(--cyan)}
+.btn{display:inline-block;margin-top:1.6rem;padding:.9rem 1.8rem;border-radius:999px;background:var(--gold);color:#241800;font-weight:700;text-decoration:none;transition:transform .2s}
+.btn:hover{transform:translateY(-3px)}
+section{padding:5.5rem 1.2rem}
+section:nth-of-type(even){background:var(--deep)}
+.wrap{max-width:1060px;margin:0 auto}
+h2{font:600 clamp(1.6rem,4vw,2.5rem)/1.2 var(--head);margin-bottom:.8rem}
+.sub{color:var(--mute);max-width:680px;margin-bottom:2.4rem}
+.grid{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:1.6rem}
+.box h3{font:600 1.05rem var(--head);color:var(--cyan);margin-bottom:.6rem}
+.stat{font:800 2.6rem var(--head);color:var(--gold);line-height:1}
+/* timeline */
+.tl{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.tl button,.tabs button{font:500 1rem var(--body);color:var(--ice);background:transparent;border:1px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;cursor:pointer;transition:.2s}
+.tl button:hover,.tabs button:hover{border-color:var(--cyan)}
+.tl button[aria-selected=true],.tabs button[aria-selected=true]{background:var(--cyan);color:#001a26;border-color:var(--cyan);font-weight:700}
+.era{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;min-height:210px}
+.era .year{font:800 clamp(2.4rem,7vw,4.5rem) var(--head);color:var(--gold);line-height:1}
+.era h3{font:600 1.4rem var(--head);margin:.6rem 0}
+.era[hidden],.pane[hidden]{display:none}
+/* flip cards */
+.flip{perspective:1000px;height:270px;cursor:pointer;background:none;border:0;color:inherit;font:inherit;text-align:left;padding:0}
+.flip i{position:absolute;inset:0;border-radius:18px;padding:1.5rem;backface-visibility:hidden;transition:transform .7s cubic-bezier(.2,.7,.2,1);border:1px solid var(--line);font-style:normal;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:linear-gradient(160deg,var(--panel),#0a1640)}
+.flip .b{background:var(--cyan);color:#00202e;transform:rotateY(180deg);font-weight:500;font-size:.98rem;line-height:1.55}
+.flip{position:relative;transform-style:preserve-3d}
+.flip .f{transform:rotateY(0)}
+.flip.on .f{transform:rotateY(-180deg)}
+.flip.on .b{transform:rotateY(0)}
+.flip .n{font:800 3rem var(--head);color:var(--gold)}
+.flip strong{font:600 1.05rem/1.35 var(--head)}
+.hint{color:var(--mute);font-size:.85rem;margin-top:.6rem}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.pane{animation:rise .5s both}
+.pane ul{margin:1rem 0 0 1.2rem}.pane li{margin:.4rem 0}
+.pane .box{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem}
+footer{padding:4rem 1.2rem 2.5rem;text-align:center;color:var(--mute);border-top:1px solid var(--line);background:linear-gradient(180deg,var(--night),#030719)}
+.auth{max-width:720px;margin:0 auto 2rem;padding:2rem 1.6rem;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,rgba(17,35,90,.75),rgba(8,18,52,.75));box-shadow:0 0 0 1px rgba(79,216,255,.08),0 20px 50px rgba(0,0,0,.35)}
+.auth-title{font:600 1.15rem var(--head);color:var(--cyan);margin-bottom:.6rem}
+.auth-work{color:var(--ice);font-weight:500}
+.grp{display:inline-block;margin-left:.3rem;padding:.1rem .8rem;border-radius:999px;background:var(--gold);color:#241800;font-weight:700}
+.team{list-style:none;padding:0;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:1.3rem 0}
+.team li{padding:.5rem 1.1rem;border:1px solid var(--line);border-radius:999px;color:var(--ice);background:rgba(5,11,36,.6);font-weight:500}
+.auth-theme{color:var(--mute);font-size:.95rem}.auth-theme em{color:var(--gold);font-style:normal;font-weight:500}
+.fine{font-size:.85rem}
+@media(max-width:720px){.era,.pane .box{grid-template-columns:1fr}section{padding:4rem 1rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Навігація"><a href="#top">Головна</a><a href="#day">Всесвітній день науки</a><a href="#eng">Інженерія</a><a href="#facts">ТОП-5 фактів</a><a href="#future">Майбутнє</a></nav>
+
+<header class="hero" id="top">
+<canvas id="sky" aria-hidden="true"></canvas>
+<div>
+<h1>Територія наукових відкриттів</h1>
+<p class="slogan">Запитання — початок кожного відкриття</p>
+<p class="lead">10 листопада світ відзначає Всесвітній день науки в ім’я миру та розвитку. Разом пройдемо шлях від першого колеса до штучного інтелекту й зірок.</p>
+<div class="count" aria-live="polite"><span>До свята:</span><b id="cd">…</b></div><br>
+<a class="btn" href="#day">Розпочати подорож</a>
+</div>
+</header>
+
+<section id="day"><div class="wrap">
+<h2>Історія та суть Всесвітнього дня науки</h2>
+<p class="sub">Свято нагадує, що наука належить кожному й повинна служити суспільству.</p>
+<div class="grid">
+<div class="box"><div class="stat">2001</div><h3>Рік запровадження</h3><p>ЮНЕСКО проголосила Всесвітній день науки в ім’я миру та розвитку, а вперше його відзначили 10 листопада 2002 року.</p></div>
+<div class="box"><div class="stat">1999</div><h3>Всесвітня конференція</h3><p>Ідея виросла з Будапештської конференції з науки, на якій ухвалили Декларацію про науку та використання наукових знань.</p></div>
+<div class="box"><div class="stat">3</div><h3>Головні цілі</h3><p>Зміцнити суспільну довіру до науки, показати її роль у щоденному житті, залучити молодь і підтримати інвестиції в дослідження.</p></div>
+</div>
+<p class="hint">Щороку ЮНЕСКО обирає окрему тему свята, тож актуальне гасло шукайте на офіційному сайті організації.</p>
+</div></section>
+
+<section id="eng"><div class="wrap">
+<h2>Роль інженерії у розвитку людства</h2>
+<p class="sub">Наука відповідає на запитання «чому?», а інженерія — «як це зробити?». Оберіть епоху:</p>
+<div class="tl" role="tablist" id="tl"></div>
+<div id="eras"></div>
+</div></section>
+
+<section id="facts"><div class="wrap">
+<h2>ТОП-5 найцікавіших фактів</h2>
+<p class="sub">Торкніться картки, щоб перевернути її.</p>
+<div class="grid" id="fl"></div>
+</div></section>
+
+<section id="future"><div class="wrap">
+<h2>Майбутнє науки</h2>
+<p class="sub">Три напрями, які вже змінюють світ.</p>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div id="panes"></div>
+</div></section>
+
+<footer>
+<div class="auth">
+<p class="auth-title">Автори проєкту</p>
+<p class="auth-work">Робота виконана студентами групи <span class="grp">IT-2-1</span></p>
+<ul class="team" aria-label="Учасники проєкту">
+<li>Заболотний Марк</li><li>Трофімчук Назар</li><li>Кулик Єгор</li>
+</ul>
+<p class="auth-theme">Тема: <em>Територія наукових відкриттів</em></p>
+</div>
+<p class="fine">Навчальний проєкт з дисципліни «Технології» · До Всесвітнього дня науки 10 листопада</p>
+</footer>
+
+<script>
+const eras=[
+["3500 до н. е.","Колесо","Гончарне коло та візок дали людству транспорт і вперше показали силу механіки: вантаж став рухомим."],
+["1760–1840","Парова машина","Джеймс Ватт удосконалив паровий двигун, і почалася промислова революція: фабрики, залізниці, пароплави."],
+["1879–1969","Електрика й радіо","Лампа розжарення, генератори, радіо та літак перетворили енергію й зв’язок на основу цивілізації."],
+["1957–1969","Космос","Супутник, політ Юрія Гагаріна та висадка на Місяць стали тріумфом інженерної думки й міжнародної праці."],
+["1971–сьогодні","IT та інтернет","Мікропроцесор, інтернет і смартфони об’єднали мільярди людей, а дані стали новим ресурсом."]];
+const facts=[
+["Світло з минулого","Світло найдальших галактик летіло до нас мільярди років, тож телескопи показують Всесвіт у минулому."],
+["Всесвіт розширюється","Вік Всесвіту — близько 13,8 млрд років, а галактики й досі віддаляються одна від одної."],
+["Зоряний пил у нас","Вуглець, кисень і залізо в нашому тілі утворилися в ядрах зірок, тож ми буквально складаємося із зоряної речовини."],
+["Дім на орбіті","Міжнародна космічна станція облітає Землю приблизно кожні 90 хвилин і є найбільшою спільною інженерною спорудою в космосі."],
+["Космічний телескоп","«Джеймс Вебб» працює в інфрачервоному діапазоні та дивиться на галактики, які формувалися на зорі Всесвіту."]];
+const fut=[
+["Штучний інтелект","Моделі машинного навчання аналізують дані швидше за людину: допомагають лікарям, перекладають мови, пришвидшують наукові розрахунки.",["Медична діагностика","Прогноз погоди та клімату","Розумні помічники й автоматизація"],"Ризики теж реальні: потрібні етика, прозорість і людський контроль."],
+["Відновлювана енергетика","Сонце, вітер і вода дають енергію без викидів вуглекислого газу, а нові акумулятори вирішують проблему нестабільності.",["Сонячні й вітрові станції","Зелений водень","Накопичувачі енергії"],"Для України це шлях до енергонезалежності та відбудови."],
+["Біотехнології","Генна інженерія, мРНК-вакцини та лабораторно вирощені тканини відкривають еру персоналізованої медицини.",["Генна терапія","Нові вакцини","Біопалива та біопластик"],"Тут особливо важливі безпека та суспільна довіра."]];
+const $=s=>document.querySelector(s);
+// timeline
+eras.forEach((e,i)=>{
+ $('#tl').insertAdjacentHTML('beforeend',`<button role="tab" aria-selected="${!i}" data-i="${i}">${e[1]}</button>`);
+ $('#eras').insertAdjacentHTML('beforeend',`<div class="era" ${i?'hidden':''}><div class="year">${e[0]}</div><div><h3>${e[1]}</h3><p>${e[2]}</p></div></div>`)});
+$('#tl').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;
+ document.querySelectorAll('#tl button').forEach(x=>x.setAttribute('aria-selected',x===b));
+ document.querySelectorAll('.era').forEach((x,i)=>x.hidden=i!=b.dataset.i)};
+// facts
+facts.forEach((f,i)=>$('#fl').insertAdjacentHTML('beforeend',`<button class="flip" aria-label="Факт ${i+1}: ${f[0]}"><i class="f"><span class="n">${i+1}</span><strong>${f[0]}</strong></i><i class="b">${f[1]}</i></button>`));
+$('#fl').onclick=ev=>{const c=ev.target.closest('.flip');if(c)c.classList.toggle('on')};
+// future
+fut.forEach((f,i)=>{
+ $('#tabs').insertAdjacentHTML('beforeend',`<button role="tab" aria-selected="${!i}" data-i="${i}">${f[0]}</button>`);
+ $('#panes').insertAdjacentHTML('beforeend',`<div class="pane" ${i?'hidden':''}><div class="box"><div><h3>${f[0]}</h3><p>${f[1]}</p><ul>${f[2].map(x=>`<li>${x}</li>`).join('')}</ul></div><p style="color:var(--gold);align-self:center">${f[3]}</p></div></div>`)});
+$('#tabs').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;
+ document.querySelectorAll('#tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
+ document.querySelectorAll('.pane').forEach((x,i)=>x.hidden=i!=b.dataset.i)};
+// countdown
+(function(){const now=new Date();let t=new Date(now.getFullYear(),10,10);
+ const d=Math.ceil((t-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+ $('#cd').textContent=d<0?'Побачимося наступного року':d==0?'Сьогодні!':d+' дн.'})();
+// starfield with drifting constellation links
+(function(){const c=$('#sky'),x=c.getContext('2d');let w,h,P=[];
+ const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ function size(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;
+  P=Array.from({length:Math.min(110,w/12|0)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.6+.4}))}
+ function draw(){x.clearRect(0,0,w,h);
+  P.forEach((p,i)=>{if(!reduce){p.x=(p.x+p.vx+w)%w;p.y=(p.y+p.vy+h)%h}
+   x.fillStyle='#e6f3ff';x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();
+   for(let j=i+1;j<P.length;j++){const q=P[j],d=Math.hypot(p.x-q.x,p.y-q.y);
+    if(d<120){x.strokeStyle=`rgba(79,216,255,${.35*(1-d/120)})`;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}});
+  if(!reduce)requestAnimationFrame(draw)}
+ size();draw();addEventListener('resize',()=>{size();if(reduce)draw()})})();
+</script>
+</body>
+</html>
